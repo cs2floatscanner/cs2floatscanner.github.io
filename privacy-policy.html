@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS2 Float Scanner — Privacy Policy</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0e1621;
+      color: #c6d4df;
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #1b2838;
+      border-radius: 8px;
+      padding: 40px 48px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    h1 {
+      color: #fff;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #8f98a0;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    h2 {
+      color: #67c1f5;
+      font-size: 18px;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(103, 193, 245, 0.15);
+      padding-bottom: 6px;
+    }
+    p, li { font-size: 15px; margin-bottom: 10px; }
+    ul { padding-left: 24px; margin-bottom: 16px; }
+    li { margin-bottom: 6px; }
+    code {
+      background: rgba(103, 193, 245, 0.1);
+      color: #67c1f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+    }
+    th { color: #8f98a0; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+    .highlight {
+      background: rgba(76, 209, 55, 0.08);
+      border-left: 3px solid #4cd137;
+      padding: 12px 16px;
+      border-radius: 0 4px 4px 0;
+      margin: 16px 0;
+    }
+    .highlight strong { color: #4cd137; }
+    a { color: #67c1f5; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .footer {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: #8f98a0;
+      font-size: 13px;
+    }
+    .lang-switch {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .lang-switch a {
+      padding: 6px 16px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.06);
+      color: #c6d4df;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .lang-switch a.active {
+      background: rgba(103, 193, 245, 0.2);
+      color: #67c1f5;
+      font-weight: 600;
+    }
+    .lang-block { display: none; }
+    .lang-block.active { display: block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CS2 Float Scanner</h1>
+    <p class="subtitle">Privacy Policy / Политика конфиденциальности</p>
+
+    <div class="lang-switch">
+      <a id="btn-ru" class="active" onclick="switchLang('ru')">Русский</a>
+      <a id="btn-en" onclick="switchLang('en')">English</a>
+    </div>
+
+    <!-- ====== RUSSIAN ====== -->
+    <div id="lang-ru" class="lang-block active">
+      <p><strong>Дата вступления в силу:</strong> 6 марта 2026 г.</p>
+
+      <h2>1. Общие сведения</h2>
+      <p>CS2 Float Scanner — расширение для браузера Google Chrome, которое отображает Float Value и Paint Seed предметов Counter-Strike 2 на страницах Steam Community Market и в инвентарях Steam.</p>
+
+      <div class="highlight">
+        <strong>Главный принцип:</strong> расширение работает полностью локально. Никакие данные не отправляются на внешние серверы. Расширение не собирает, не хранит и не передаёт персональную информацию пользователей.
+      </div>
+
+      <h2>2. Какие данные обрабатывает расширение</h2>
+      <table>
+        <tr><th>Данные</th><th>Источник</th><th>Цель</th><th>Передача третьим лицам</th></tr>
+        <tr>
+          <td>Float Value, Paint Seed</td>
+          <td>API Steam (steamcommunity.com), уже загруженные на странице</td>
+          <td>Отображение рядом с предметом</td>
+          <td>Нет</td>
+        </tr>
+        <tr>
+          <td>Пользовательские настройки</td>
+          <td>Выбор пользователя (точность float, переключатели функций)</td>
+          <td>Персонализация работы расширения</td>
+          <td>Нет</td>
+        </tr>
+        <tr>
+          <td>Градации цена/float</td>
+          <td>Ввод пользователя</td>
+          <td>Подсветка выгодных предложений</td>
+          <td>Нет</td>
+        </tr>
+        <tr>
+          <td>Порог уведомлений</td>
+          <td>Ввод пользователя</td>
+          <td>Отправка локальных уведомлений браузера</td>
+          <td>Нет</td>
+        </tr>
+      </table>
+
+      <h2>3. Хранение данных</h2>
+      <p>Все данные хранятся исключительно локально в браузере пользователя через <code>chrome.storage.local</code>. Данные включают:</p>
+      <ul>
+        <li>Настройки отображения (точность float, переключатели функций)</li>
+        <li>Пользовательские градации цена/float для конкретных предметов</li>
+        <li>Пороги уведомлений</li>
+      </ul>
+      <p>Данные никогда не покидают устройство пользователя.</p>
+
+      <h2>4. Разрешения расширения</h2>
+      <table>
+        <tr><th>Разрешение</th><th>Зачем необходимо</th></tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>Сохранение пользовательских настроек и градаций цена/float между сессиями</td>
+        </tr>
+        <tr>
+          <td><code>notifications</code></td>
+          <td>Отправка уведомлений браузера при обнаружении предмета с float ниже заданного порога</td>
+        </tr>
+        <tr>
+          <td><code>host_permissions</code> для <code>steamcommunity.com</code></td>
+          <td>Доступ к данным на страницах Steam Market и инвентарей для извлечения информации о предметах</td>
+        </tr>
+      </table>
+
+      <h2>5. Сетевые запросы</h2>
+      <p>Расширение выполняет запросы только к <code>steamcommunity.com</code> — для получения данных о листингах при массовой загрузке (20/100 предметов). Эти запросы используют существующие cookies пользователя Steam и направлены исключительно к серверам Valve. Расширение <strong>не взаимодействует</strong> ни с какими другими серверами.</p>
+
+      <h2>6. Аналитика и отслеживание</h2>
+      <p>Расширение <strong>не использует</strong> никакие системы аналитики, трекинга, телеметрии или рекламы. Не используются Google Analytics, Facebook Pixel или любые другие подобные сервисы.</p>
+
+      <h2>7. Дети</h2>
+      <p>Расширение не предназначено для детей младше 13 лет и не собирает намеренно данные от таких пользователей.</p>
+
+      <h2>8. Изменения в политике</h2>
+      <p>При внесении существенных изменений в данную политику обновлённая версия будет опубликована на этой же странице с указанием новой даты вступления в силу.</p>
+
+      <h2>9. Контакты</h2>
+      <p>По вопросам, связанным с конфиденциальностью, обращайтесь: <a href="mailto:cs2floatscanner@gmail.com">cs2floatscanner@gmail.com</a></p>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="lang-block">
+      <p><strong>Effective Date:</strong> March 6, 2026</p>
+
+      <h2>1. Overview</h2>
+      <p>CS2 Float Scanner is a Google Chrome browser extension that displays the Float Value and Paint Seed of Counter-Strike 2 items on Steam Community Market pages and Steam inventories.</p>
+
+      <div class="highlight">
+        <strong>Core principle:</strong> the extension operates entirely locally. No data is sent to external servers. The extension does not collect, store, or transmit any personal information of its users.
+      </div>
+
+      <h2>2. Data Processed by the Extension</h2>
+      <table>
+        <tr><th>Data</th><th>Source</th><th>Purpose</th><th>Shared with third parties</th></tr>
+        <tr>
+          <td>Float Value, Paint Seed</td>
+          <td>Steam API (steamcommunity.com), already loaded on the page</td>
+          <td>Display next to each item</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>User settings</td>
+          <td>User input (float precision, feature toggles)</td>
+          <td>Personalize extension behavior</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Price/float tiers</td>
+          <td>User input</td>
+          <td>Highlight good deals</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Notification thresholds</td>
+          <td>User input</td>
+          <td>Send local browser notifications</td>
+          <td>No</td>
+        </tr>
+      </table>
+
+      <h2>3. Data Storage</h2>
+      <p>All data is stored exclusively in the user's browser via <code>chrome.storage.local</code>. This includes:</p>
+      <ul>
+        <li>Display settings (float precision, feature toggles)</li>
+        <li>Custom price/float tiers for specific items</li>
+        <li>Notification thresholds</li>
+      </ul>
+      <p>Data never leaves the user's device.</p>
+
+      <h2>4. Extension Permissions</h2>
+      <table>
+        <tr><th>Permission</th><th>Why it is needed</th></tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>Save user settings and price/float tiers between sessions</td>
+        </tr>
+        <tr>
+          <td><code>notifications</code></td>
+          <td>Send browser notifications when an item with float below the set threshold is found</td>
+        </tr>
+        <tr>
+          <td><code>host_permissions</code> for <code>steamcommunity.com</code></td>
+          <td>Access data on Steam Market and inventory pages to extract item information</td>
+        </tr>
+      </table>
+
+      <h2>5. Network Requests</h2>
+      <p>The extension only makes requests to <code>steamcommunity.com</code> — to fetch listing data during bulk loading (20/100 items). These requests use the user's existing Steam cookies and are directed exclusively to Valve's servers. The extension <strong>does not communicate</strong> with any other servers.</p>
+
+      <h2>6. Analytics and Tracking</h2>
+      <p>The extension <strong>does not use</strong> any analytics, tracking, telemetry, or advertising systems. No Google Analytics, Facebook Pixel, or any similar services are used.</p>
+
+      <h2>7. Children</h2>
+      <p>The extension is not intended for children under the age of 13 and does not knowingly collect data from such users.</p>
+
+      <h2>8. Changes to This Policy</h2>
+      <p>If significant changes are made to this policy, the updated version will be published on this same page with a new effective date.</p>
+
+      <h2>9. Contact</h2>
+      <p>For privacy-related questions, contact: <a href="mailto:cs2floatscanner@gmail.com">cs2floatscanner@gmail.com</a></p>
+    </div>
+
+    <div class="footer">
+      &copy; 2026 CS2 Float Scanner Dev. All rights reserved.
+    </div>
+  </div>
+
+  <script>
+    function switchLang(lang) {
+      document.querySelectorAll('.lang-block').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.lang-switch a').forEach(el => el.classList.remove('active'));
+      document.getElementById('lang-' + lang).classList.add('active');
+      document.getElementById('btn-' + lang).classList.add('active');
+    }
+  </script>
+</body>
+</html>
