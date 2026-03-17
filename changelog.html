@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS2 Float Scanner — Changelog</title>
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cs2floatscanner/cs2floatscanner.github.io/main/icon48.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-dim: #8b949e;
+      --heading: #f0f6fc;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --orange: #d29922;
+      --red: #f85149;
+      --purple: #bc8cff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .header {
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+      background: linear-gradient(180deg, rgba(88,166,255,0.06) 0%, transparent 100%);
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--heading);
+    }
+
+    .header p {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .header-links {
+      margin-left: auto;
+      display: flex;
+      gap: 12px;
+    }
+
+    .header-links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .header-links a:hover {
+      background: rgba(88,166,255,0.1);
+      border-color: var(--accent);
+    }
+
+    main {
+      padding: 32px 0 64px;
+    }
+
+    .version {
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .version::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 0;
+      bottom: -40px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .version:last-child::before {
+      bottom: 0;
+    }
+
+    .version-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .version-header::before {
+      content: '';
+      position: absolute;
+      left: -37px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+    }
+
+    .version:first-child .version-header::before {
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(63,185,80,0.4);
+    }
+
+    .version-tag {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--heading);
+    }
+
+    .version-date {
+      font-size: 13px;
+      color: var(--text-dim);
+      background: var(--surface);
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .version-badge {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+
+    .version-badge--latest {
+      background: rgba(63,185,80,0.15);
+      color: var(--green);
+      border: 1px solid rgba(63,185,80,0.3);
+    }
+
+    .change-group {
+      margin-bottom: 16px;
+    }
+
+    .change-group h3 {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .change-group h3 .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot--new { background: var(--green); }
+    .dot--improved { background: var(--accent); }
+    .dot--fixed { background: var(--red); }
+    .dot--changed { background: var(--orange); }
+
+    .change-group ul {
+      list-style: none;
+      padding-left: 14px;
+    }
+
+    .change-group li {
+      position: relative;
+      padding: 4px 0;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .change-group li::before {
+      content: '—';
+      position: absolute;
+      left: -14px;
+      color: var(--text-dim);
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .header-inner { flex-wrap: wrap; }
+      .header-links { margin-left: 0; width: 100%; margin-top: 12px; }
+      .version::before { left: -20px; }
+      .version-header::before { left: -25px; }
+      .container { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-inner">
+      <img src="https://raw.githubusercontent.com/cs2floatscanner/cs2floatscanner.github.io/main/icon48.png"
+           alt="CS2 Float Scanner" class="header-icon" onerror="this.style.display='none'">
+      <div>
+        <h1>CS2 Float Scanner</h1>
+        <p>Release Notes &amp; Changelog</p>
+      </div>
+      <div class="header-links">
+        <a href="https://chromewebstore.google.com/detail/cs2-float-scanner" target="_blank">Chrome Web Store</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container" style="padding-left: 56px;">
+
+    <!-- v1.6.0 -->
+    <div class="version">
+      <div class="version-header">
+        <span class="version-tag">v1.6.0</span>
+        <span class="version-date">March 2026</span>
+        <span class="version-badge version-badge--latest">Latest</span>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--fixed"></span> Fixed</h3>
+        <ul>
+          <li>Float alerts now reliably trigger on page reload and page navigation</li>
+          <li>Fixed <code>chrome.runtime.sendMessage</code> promise rejection not being caught (MV3)</li>
+          <li>Fixed background service worker not calling <code>sendResponse</code> for notification messages</li>
+        </ul>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>In-page toast notifications with item info and "Go to listing" button</li>
+          <li>Alert matching listings are highlighted with a pulsing red outline and auto-scrolled into view</li>
+          <li>Audio alert (short dual-tone beep) when a float below threshold is found</li>
+          <li>Duplicate alert prevention per listing ID</li>
+        </ul>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--improved"></span> Improved</h3>
+        <ul>
+          <li>Notifications work even when OS-level Chrome notifications are suppressed (toast fallback)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v1.5.0 -->
+    <div class="version">
+      <div class="version-header">
+        <span class="version-tag">v1.5.0</span>
+        <span class="version-date">March 2026</span>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>Built-in rare patterns database for 20+ charm items (color scales with ranges)</li>
+          <li>Blue Gem patterns for Case Hardened / Heat Treated weapons and 17 knives (Karambit, M9, Butterfly, etc.)</li>
+          <li>Pattern Tier ranges support — define tiers like <code>20000-21500</code> for charms</li>
+          <li>Up to 10 custom pattern tiers with 200 entries each</li>
+          <li>Charm/Keychain support on Steam Market — shows pattern number instead of float</li>
+          <li>Pattern-based filtering and sorting for charm items</li>
+          <li>Purple accent styling for charm badges</li>
+        </ul>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--improved"></span> Improved</h3>
+        <ul>
+          <li>Built-in tier display now shows range strings (e.g., "1–10000") instead of "0 patterns" for range-based tiers</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v1.4.0 -->
+    <div class="version">
+      <div class="version-header">
+        <span class="version-tag">v1.4.0</span>
+        <span class="version-date">February 2026</span>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>Technical analysis panel for Steam Market price charts (RSI, SMA, EMA, Bollinger Bands, MACD, VWAP)</li>
+          <li>Commission &amp; seller profit info under item prices</li>
+          <li>2D item card export with sticker/keychain layout and share functionality</li>
+          <li>Built-in rare patterns for Desert Eagle Heat Treated, AK-47 &amp; Five-SeveN Case Hardened</li>
+        </ul>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--improved"></span> Improved</h3>
+        <ul>
+          <li>Chart analysis: outlier detection, correct currency symbols for all Steam currencies</li>
+          <li>Default analysis period set to 90 days for faster loading</li>
+          <li>Analysis button appears immediately, data loads on demand</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v1.3.0 -->
+    <div class="version">
+      <div class="version-header">
+        <span class="version-tag">v1.3.0</span>
+        <span class="version-date">February 2026</span>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>10-language support (EN, RU, ZH, PT, DE, FR, ES, TR, PL, UK) with auto-detection from Steam</li>
+          <li>Pattern search and sorting alongside float-based controls</li>
+          <li>Custom Pattern Tiers system — up to 5 tiers with colors and labels</li>
+          <li>Float alert notifications with threshold input</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v1.2.0 -->
+    <div class="version">
+      <div class="version-header">
+        <span class="version-tag">v1.2.0</span>
+        <span class="version-date">January 2026</span>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>Sticker wear display with transparency overlay and quality labels</li>
+          <li>Keychain/charm pattern display on Market and Inventory pages</li>
+          <li>Sticker combo detection (4x or 5x matching unstickered stickers)</li>
+          <li>Compatibility mode — works alongside SIH, CSFloat Market Checker</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v1.1.0 -->
+    <div class="version">
+      <div class="version-header">
+        <span class="version-tag">v1.1.0</span>
+        <span class="version-date">January 2026</span>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>Chrome extension with float value and paint seed display on Steam Market</li>
+          <li>Bulk loading (20 / 100 items at once)</li>
+          <li>Float sorting and min/max filtering</li>
+          <li>Steam pagination sync (top and bottom controls)</li>
+          <li>Support for new Steam <code>propid:6</code> format alongside legacy <code>m/a/d</code></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    CS2 Float Scanner &copy; 2026 &middot;
+    <a href="privacy-policy.html">Privacy Policy</a> &middot;
+    <a href="https://chromewebstore.google.com/detail/cs2-float-scanner" target="_blank">Install</a>
+  </div>
+</footer>
+
+</body>
+</html>
