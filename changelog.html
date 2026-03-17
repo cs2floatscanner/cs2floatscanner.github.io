@@ -272,21 +272,31 @@
       </div>
 
       <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>Built-in rare patterns database with 40+ items:
+            Case Hardened Blue Gems for AK-47, Five-SeveN, MAC-10, Karambit, M9 Bayonet, Butterfly Knife, and 15+ more knives;
+            Heat Treated patterns for Desert Eagle and Five-SeveN;
+            Color scale tiers for 20 charms (Die-cast AK, Lil' SAS, Hot Howl, Semi-Precious, etc.)</li>
+          <li>Full Charm/Keychain support on Steam Market — shows pattern number instead of float</li>
+          <li>Pattern-based filtering and sorting for charm items with purple accent badges</li>
+          <li>Pattern Tier ranges — define tiers like <code>20000-21500</code> for charms</li>
+          <li>Up to 10 custom pattern tiers with 200 entries each</li>
+          <li>In-page toast notifications with item details and "Go to listing" button</li>
+          <li>Alert matching listings highlighted with pulsing red outline and auto-scrolled into view</li>
+          <li>Audio alert (short dual-tone beep) when a float below threshold is found</li>
+          <li>Duplicate alert prevention per listing ID</li>
+          <li>Changelog page with "What's New" link in extension settings</li>
+        </ul>
+      </div>
+
+      <div class="change-group">
         <h3><span class="dot dot--fixed"></span> Fixed</h3>
         <ul>
           <li>Float alerts now reliably trigger on page reload and page navigation</li>
           <li>Fixed <code>chrome.runtime.sendMessage</code> promise rejection not being caught (MV3)</li>
           <li>Fixed background service worker not calling <code>sendResponse</code> for notification messages</li>
-        </ul>
-      </div>
-
-      <div class="change-group">
-        <h3><span class="dot dot--new"></span> New</h3>
-        <ul>
-          <li>In-page toast notifications with item info and "Go to listing" button</li>
-          <li>Alert matching listings are highlighted with a pulsing red outline and auto-scrolled into view</li>
-          <li>Audio alert (short dual-tone beep) when a float below threshold is found</li>
-          <li>Duplicate alert prevention per listing ID</li>
+          <li>Built-in tier display now shows range strings instead of "0 patterns" for range-based tiers</li>
         </ul>
       </div>
 
@@ -294,34 +304,7 @@
         <h3><span class="dot dot--improved"></span> Improved</h3>
         <ul>
           <li>Notifications work even when OS-level Chrome notifications are suppressed (toast fallback)</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- v1.5.0 -->
-    <div class="version">
-      <div class="version-header">
-        <span class="version-tag">v1.5.0</span>
-        <span class="version-date">March 2026</span>
-      </div>
-
-      <div class="change-group">
-        <h3><span class="dot dot--new"></span> New</h3>
-        <ul>
-          <li>Built-in rare patterns database for 20+ charm items (color scales with ranges)</li>
-          <li>Blue Gem patterns for Case Hardened / Heat Treated weapons and 17 knives (Karambit, M9, Butterfly, etc.)</li>
-          <li>Pattern Tier ranges support — define tiers like <code>20000-21500</code> for charms</li>
-          <li>Up to 10 custom pattern tiers with 200 entries each</li>
-          <li>Charm/Keychain support on Steam Market — shows pattern number instead of float</li>
-          <li>Pattern-based filtering and sorting for charm items</li>
-          <li>Purple accent styling for charm badges</li>
-        </ul>
-      </div>
-
-      <div class="change-group">
-        <h3><span class="dot dot--improved"></span> Improved</h3>
-        <ul>
-          <li>Built-in tier display now shows range strings (e.g., "1–10000") instead of "0 patterns" for range-based tiers</li>
+          <li>Build script now auto-deploys changelog to GitHub Pages via SSH</li>
         </ul>
       </div>
     </div>
