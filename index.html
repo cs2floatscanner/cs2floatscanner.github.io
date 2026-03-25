@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS2 Float Scanner — See the Real Quality Before You Buy</title>
+  <meta name="description" content="Chrome extension that shows Float Value, Paint Seed, stickers, keychains, Blue Gem tiers, chart analysis and alerts for CS2 items on Steam Market.">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/cs2floatscanner/cs2floatscanner.github.io/main/icon48.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --surface: #111827;
+      --surface2: #1a2236;
+      --border: #1e293b;
+      --text: #c9d1d9;
+      --text-dim: #6b7280;
+      --heading: #f0f6fc;
+      --accent: #58a6ff;
+      --accent2: #818cf8;
+      --green: #34d399;
+      --orange: #fbbf24;
+      --red: #f87171;
+      --glow: rgba(88, 166, 255, 0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* --- Nav --- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 0;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav__brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--heading);
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .nav__brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav__links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+
+    .nav__links a:hover { color: var(--heading); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(88, 166, 255, 0.25);
+    }
+
+    .btn--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(88, 166, 255, 0.35);
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    .btn--outline:hover {
+      background: var(--glow);
+      border-color: var(--accent);
+    }
+
+    .btn--sm { padding: 8px 16px; font-size: 13px; }
+
+    /* --- Hero --- */
+    .hero {
+      position: relative;
+      padding: 160px 24px 100px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero__glow {
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse at center,
+        rgba(88, 166, 255, 0.12) 0%,
+        rgba(129, 140, 248, 0.06) 40%,
+        transparent 70%);
+      pointer-events: none;
+      animation: pulseGlow 6s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease-out both;
+    }
+
+    .hero__badge span { color: var(--green); font-weight: 600; }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 800;
+      color: var(--heading);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s ease-out 0.1s both;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero__sub {
+      font-size: 18px;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      animation: fadeUp 0.6s ease-out 0.2s both;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s ease-out 0.3s both;
+    }
+
+    .hero__stats {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      margin-top: 56px;
+      animation: fadeUp 0.6s ease-out 0.4s both;
+    }
+
+    .hero__stat {
+      text-align: center;
+    }
+
+    .hero__stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--heading);
+    }
+
+    .hero__stat-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- Section --- */
+    .section {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section__label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section__title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--heading);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section__desc {
+      font-size: 16px;
+      color: var(--text-dim);
+      max-width: 560px;
+      margin-bottom: 48px;
+    }
+
+    /* --- Features grid --- */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(88, 166, 255, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card__icon--blue   { background: rgba(88, 166, 255, 0.12); }
+    .feature-card__icon--purple { background: rgba(129, 140, 248, 0.12); }
+    .feature-card__icon--green  { background: rgba(52, 211, 153, 0.12); }
+    .feature-card__icon--orange { background: rgba(251, 191, 36, 0.12); }
+    .feature-card__icon--red    { background: rgba(248, 113, 113, 0.12); }
+    .feature-card__icon--teal   { background: rgba(45, 212, 191, 0.12); }
+
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* --- How it works --- */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      counter-reset: step;
+    }
+
+    .step {
+      text-align: center;
+      padding: 40px 24px;
+      counter-increment: step;
+      position: relative;
+    }
+
+    .step__number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .step h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+
+    /* --- Showcase --- */
+    .showcase {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .showcase__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .showcase__text h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 16px;
+    }
+
+    .showcase__text p {
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .showcase__list {
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .showcase__list li {
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .showcase__list li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .showcase__visual {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-dim);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showcase__visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 32px;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .showcase__visual .dots {
+      position: absolute;
+      top: 10px;
+      left: 16px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .showcase__visual .dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .showcase__visual .dots span:nth-child(1) { background: var(--red); }
+    .showcase__visual .dots span:nth-child(2) { background: var(--orange); }
+    .showcase__visual .dots span:nth-child(3) { background: var(--green); }
+
+    .showcase__visual pre {
+      margin-top: 24px;
+      white-space: pre-wrap;
+    }
+
+    .showcase__visual .hl-key { color: var(--accent); }
+    .showcase__visual .hl-val { color: var(--green); }
+    .showcase__visual .hl-str { color: var(--orange); }
+    .showcase__visual .hl-dim { color: var(--text-dim); }
+
+    /* --- Highlights row --- */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    .highlight {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .highlight__icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .highlight h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 6px;
+    }
+
+    .highlight p {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    /* --- CTA --- */
+    .cta {
+      text-align: center;
+      padding: 100px 24px;
+      position: relative;
+    }
+
+    .cta__glow {
+      position: absolute;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse at center,
+        rgba(129, 140, 248, 0.08) 0%,
+        transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--heading);
+      margin-bottom: 16px;
+    }
+
+    .cta p {
+      font-size: 16px;
+      color: var(--text-dim);
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* --- Footer --- */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+    }
+
+    .footer__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer__copy {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .footer__links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer__links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.15s;
+    }
+
+    .footer__links a:hover { color: var(--accent); }
+
+    /* --- Animations --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      .steps { grid-template-columns: 1fr; gap: 16px; }
+      .showcase__grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero__stats { gap: 24px; }
+      .nav__links { gap: 12px; }
+      .nav__links a:not(.btn) { display: none; }
+      .features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="#" class="nav__brand">
+      <img src="https://raw.githubusercontent.com/cs2floatscanner/cs2floatscanner.github.io/main/icon48.png"
+           alt="" onerror="this.style.display='none'">
+      CS2 Float Scanner
+    </a>
+    <div class="nav__links">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="https://chromewebstore.google.com/detail/cs2-float-scanner/klnnekdaeiiakpipgkdhllhpbnllieig"
+         target="_blank" class="btn btn--primary btn--sm">Add to Chrome</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero__glow"></div>
+  <div class="hero__badge">
+    <span>v1.7</span> Latest release &mdash; March 2026
+  </div>
+  <h1>See the <span class="gradient-text">Real Quality</span><br>Before You Buy</h1>
+  <p class="hero__sub">
+    Instantly see Float Value, Paint Seed, stickers, keychains, rare patterns and price analytics
+    for every CS2 item on Steam Market. Fast, private, no third-party servers.
+  </p>
+  <div class="hero__actions">
+    <a href="https://chromewebstore.google.com/detail/cs2-float-scanner/klnnekdaeiiakpipgkdhllhpbnllieig"
+       target="_blank" class="btn btn--primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+      Add to Chrome &mdash; Free
+    </a>
+    <a href="#features" class="btn btn--outline">Explore Features</a>
+  </div>
+  <div class="hero__stats">
+    <div class="hero__stat">
+      <div class="hero__stat-value">10+</div>
+      <div class="hero__stat-label">Languages</div>
+    </div>
+    <div class="hero__stat">
+      <div class="hero__stat-value">40+</div>
+      <div class="hero__stat-label">Built-in Patterns</div>
+    </div>
+    <div class="hero__stat">
+      <div class="hero__stat-value">0</div>
+      <div class="hero__stat-label">External Requests</div>
+    </div>
+    <div class="hero__stat">
+      <div class="hero__stat-value">100%</div>
+      <div class="hero__stat-label">Private</div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="section" id="features">
+  <div class="section__label reveal">Features</div>
+  <h2 class="section__title reveal">Everything you need to trade smarter</h2>
+  <p class="section__desc reveal">
+    One extension. Instant data. No sign-ups, no queues, no external servers.
+  </p>
+
+  <div class="features">
+    <div class="feature-card reveal">
+      <div class="feature-card__icon feature-card__icon--blue">&#x1F50D;</div>
+      <h3>Float &amp; Paint Seed</h3>
+      <p>See Float Value and Paint Seed right next to every market listing. Visual wear bar with precise marker position. Color-coded by wear range (FN/MW/FT/WW/BS). Copy any value with one click.</p>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-card__icon feature-card__icon--purple">&#x1F3AD;</div>
+      <h3>Stickers &amp; Keychains</h3>
+      <p>Automatic sticker detection with name, image and wear percentage. Keychain pattern display. Combo badge detection for 4x/5x matching pristine stickers.</p>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-card__icon feature-card__icon--green">&#x1F48E;</div>
+      <h3>Blue Gem &amp; Rare Patterns</h3>
+      <p>Built-in database of 40+ rare patterns: Case Hardened Blue Gems for AK-47, Karambit, M9 Bayonet and 15+ knives. Heat Treated tiers. Color scales for 20+ charms.</p>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-card__icon feature-card__icon--orange">&#x1F4C8;</div>
+      <h3>Technical Analysis</h3>
+      <p>Full-screen interactive price chart with SMA, EMA, RSI, MACD, Bollinger Bands, ATR, OBV. Drawing tools for lines. Custom time periods. Outlier filtering.</p>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-card__icon feature-card__icon--red">&#x1F514;</div>
+      <h3>Float Alerts</h3>
+      <p>Set a float threshold and get instant notifications when a matching item appears. In-page toast, audio beep, browser notification. Auto-scroll and highlight on the page.</p>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-card__icon feature-card__icon--teal">&#x1F310;</div>
+      <h3>10 Languages</h3>
+      <p>English, Russian, Chinese, Portuguese, German, French, Spanish, Turkish, Polish, Ukrainian. Auto-detects your Steam language on first launch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="section" id="how">
+  <div class="section__label reveal">How It Works</div>
+  <h2 class="section__title reveal">Three steps. Zero hassle.</h2>
+  <p class="section__desc reveal">
+    No accounts, no API keys, no configuration. Install and go.
+  </p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step__number">1</div>
+      <h3>Install</h3>
+      <p>Add CS2 Float Scanner from the Chrome Web Store. One click, no setup required.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step__number">2</div>
+      <h3>Browse</h3>
+      <p>Open any CS2 item on Steam Market or your Steam Inventory as usual.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step__number">3</div>
+      <h3>See Everything</h3>
+      <p>Float, seed, stickers, patterns, charts and alerts appear instantly. No delays.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase: Privacy -->
+<section class="showcase">
+  <div class="section">
+    <div class="showcase__grid">
+      <div class="showcase__text reveal">
+        <h3>Privacy First. Always.</h3>
+        <p>
+          CS2 Float Scanner does not send your data to any external server.
+          All data is extracted directly from Steam API responses already loaded on the page.
+        </p>
+        <ul class="showcase__list">
+          <li>No third-party requests</li>
+          <li>No accounts or sign-ups</li>
+          <li>No tracking or analytics</li>
+          <li>Instant results — no queues</li>
+          <li>Works completely offline after install</li>
+        </ul>
+      </div>
+      <div class="showcase__visual reveal">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <pre>
+<span class="hl-dim">// Data extracted from Steam page</span>
+{
+  <span class="hl-key">"float"</span>:    <span class="hl-val">0.0001284503</span>,
+  <span class="hl-key">"seed"</span>:     <span class="hl-val">342</span>,
+  <span class="hl-key">"wear"</span>:     <span class="hl-str">"Factory New"</span>,
+  <span class="hl-key">"stickers"</span>: [
+    { <span class="hl-key">"name"</span>: <span class="hl-str">"Titan (Holo)"</span>, <span class="hl-key">"wear"</span>: <span class="hl-val">0%</span> },
+    { <span class="hl-key">"name"</span>: <span class="hl-str">"Titan (Holo)"</span>, <span class="hl-key">"wear"</span>: <span class="hl-val">0%</span> },
+    { <span class="hl-key">"name"</span>: <span class="hl-str">"Titan (Holo)"</span>, <span class="hl-key">"wear"</span>: <span class="hl-val">0%</span> },
+    { <span class="hl-key">"name"</span>: <span class="hl-str">"Titan (Holo)"</span>, <span class="hl-key">"wear"</span>: <span class="hl-val">0%</span> }
+  ],
+  <span class="hl-key">"tier"</span>:     <span class="hl-str">"Blue Gem T1"</span>,
+  <span class="hl-key">"source"</span>:   <span class="hl-str">"steam_page_data"</span>
+  <span class="hl-dim">// ↑ No external API calls</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- More highlights -->
+<section class="section">
+  <div class="section__label reveal">And More</div>
+  <h2 class="section__title reveal">Built for traders, by traders</h2>
+
+  <div class="highlights">
+    <div class="highlight reveal">
+      <div class="highlight__icon">&#x1F4B0;</div>
+      <h4>Profit Calculator</h4>
+      <p>See seller proceeds and Steam commission under every listing.</p>
+    </div>
+    <div class="highlight reveal">
+      <div class="highlight__icon">&#x1F5BC;&#xFE0F;</div>
+      <h4>Card Export</h4>
+      <p>Generate a PNG card with weapon image, stickers, float and price. Share anywhere.</p>
+    </div>
+    <div class="highlight reveal">
+      <div class="highlight__icon">&#x1F4E6;</div>
+      <h4>Bulk Loading</h4>
+      <p>Load 20 or 100 items at once. Jump to any page. Works with SIH pagination.</p>
+    </div>
+    <div class="highlight reveal">
+      <div class="highlight__icon">&#x1F3A8;</div>
+      <h4>Custom Themes</h4>
+      <p>Auto, Dark, or Light theme. Follows your Steam appearance settings.</p>
+    </div>
+    <div class="highlight reveal">
+      <div class="highlight__icon">&#x2696;&#xFE0F;</div>
+      <h4>Sort &amp; Filter</h4>
+      <p>Sort by float or pattern. Filter by min/max range. Search specific seeds.</p>
+    </div>
+    <div class="highlight reveal">
+      <div class="highlight__icon">&#x1F91D;</div>
+      <h4>Compatible</h4>
+      <p>Works alongside CSFloat Market Checker and Steam Inventory Helper.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta__glow"></div>
+  <h2>Ready to see what you're really buying?</h2>
+  <p>Join thousands of CS2 traders who use Float Scanner every day. Free, private, instant.</p>
+  <a href="https://chromewebstore.google.com/detail/cs2-float-scanner/klnnekdaeiiakpipgkdhllhpbnllieig"
+     target="_blank" class="btn btn--primary">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+    Add to Chrome &mdash; Free
+  </a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__copy">CS2 Float Scanner &copy; 2026</div>
+    <div class="footer__links">
+      <a href="changelog.html">Changelog</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="https://chromewebstore.google.com/detail/cs2-float-scanner/klnnekdaeiiakpipgkdhllhpbnllieig"
+         target="_blank">Chrome Web Store</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal animation
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      for (var i = 0; i < els.length; i++) els[i].classList.add('visible');
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

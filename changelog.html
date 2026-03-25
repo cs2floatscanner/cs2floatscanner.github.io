@@ -253,6 +253,7 @@
         <p>Release Notes &amp; Changelog</p>
       </div>
       <div class="header-links">
+        <a href="index.html">Home</a>
         <a href="https://chromewebstore.google.com/detail/cs2-float-scanner" target="_blank">Chrome Web Store</a>
         <a href="privacy-policy.html">Privacy Policy</a>
       </div>
@@ -263,12 +264,53 @@
 <main>
   <div class="container" style="padding-left: 56px;">
 
+    <!-- v1.7.0 -->
+    <div class="version">
+      <div class="version-header">
+        <span class="version-tag">v1.7.0</span>
+        <span class="version-date">March 2026</span>
+        <span class="version-badge version-badge--latest">Latest</span>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>Enhanced market pagination with backward compatibility (Steam native, SIH), jump to last page, page number input</li>
+          <li>Advanced technical indicators: SMA 50, SMA 200, ATR (separate sub-chart), OBV (on volume chart)</li>
+          <li>Drawing tools on price chart — horizontal lines and trend lines, double-click to delete</li>
+          <li>Custom time periods for chart: 14D, 60D, 6M, 1.5Y, 2Y presets and custom days input</li>
+          <li>Milestone Easter eggs — Steam Achievement Unlock-style notifications at 100, 500, and 1,000 users</li>
+          <li>Extension landing page at <a href="https://cs2floatscanner.github.io" style="color:var(--accent)">cs2floatscanner.github.io</a></li>
+        </ul>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--fixed"></span> Fixed</h3>
+        <ul>
+          <li>Drawing lines now appear at the correct position relative to mouse click</li>
+          <li>Trend lines stay anchored to their original dates across timeframe changes</li>
+          <li>ATR chart is scrollable and no longer pushes content off-screen</li>
+          <li>OBV indicator now renders correctly on the volume chart</li>
+          <li>Page number "Go" button works reliably (mousedown/blur race condition resolved)</li>
+          <li>Copying a float value no longer resets pagination state</li>
+        </ul>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--improved"></span> Improved</h3>
+        <ul>
+          <li>Indicator toggles grouped by category with pill-style ON/OFF buttons</li>
+          <li>Chart area scrollable with custom-styled scrollbar</li>
+          <li>Milestone user count checked via shields.io API (no CORS issues)</li>
+        </ul>
+      </div>
+    </div>
+
     <!-- v1.6.0 -->
     <div class="version">
       <div class="version-header">
         <span class="version-tag">v1.6.0</span>
         <span class="version-date">March 2026</span>
-        <span class="version-badge version-badge--latest">Latest</span>
       </div>
 
       <div class="change-group">
