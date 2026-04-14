@@ -264,12 +264,42 @@
 <main>
   <div class="container" style="padding-left: 56px;">
 
+    <!-- v1.8.0 -->
+    <div class="version">
+      <div class="version-header">
+        <span class="version-tag">v1.8.0</span>
+        <span class="version-date">April 2026</span>
+        <span class="version-badge version-badge--latest">Latest</span>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--new"></span> New</h3>
+        <ul>
+          <li>Price forecast — Holt-Winters smoothing model predicts item price one month ahead with optimistic, base and pessimistic scenarios</li>
+          <li>Sticker prices on market listings — shows price per sticker (Steam Market median, USD), total sticker value and overpay estimate for combo stickers</li>
+          <li>Deep Order recommendations — analyzes 30 days of sales history and current order book to suggest two buy order prices: aggressive (max profit) and moderate (more fills)</li>
+          <li>Deep Order trend correction — if price is rising, recommended prices are adjusted upward so orders stay realistic</li>
+          <li>Deep Order target quantity — set how many items you want to buy per month and prices recalculate to match that volume</li>
+          <li>Real screenshot card export via external site (Swap.gg integration in share modal)</li>
+          <li>Sticker prices sourced daily from <code>ByMykel/counter-strike-price-tracker</code> on GitHub</li>
+        </ul>
+      </div>
+
+      <div class="change-group">
+        <h3><span class="dot dot--improved"></span> Improved</h3>
+        <ul>
+          <li>Chart and Deep Orders buttons now appear side by side near the price graph, also on sticker and case pages</li>
+          <li>Chart analysis button always renders; Deep Orders works independently of chart settings</li>
+          <li>Privacy policy updated to reflect sticker price data source and histogram requests</li>
+        </ul>
+      </div>
+    </div>
+
     <!-- v1.7.0 -->
     <div class="version">
       <div class="version-header">
         <span class="version-tag">v1.7.0</span>
         <span class="version-date">March 2026</span>
-        <span class="version-badge version-badge--latest">Latest</span>
       </div>
 
       <div class="change-group">
