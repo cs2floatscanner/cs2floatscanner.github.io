@@ -1,7 +1,7 @@
 (()=>{
  const root=document.getElementById('demo');if(!root)return;
  let mode='market',filtered=false;const known=new Set();
- const examples={first:{name:'Prisma 2 Case',price:1.15,net:1},second:{name:'Prisma Case',price:2.30,net:2}};
+ const examples={first:{name:'Prisma 2 Case',price:1.15,net:1.12},second:{name:'Prisma Case',price:2.30,net:2.25}};
  const words=()=>translations[document.documentElement.lang==='ru'?'ru':'en'];
  const money=value=>new Intl.NumberFormat(document.documentElement.lang==='ru'?'ru-RU':'en-US',{style:'currency',currency:'USD'}).format(value);
  function render(){
