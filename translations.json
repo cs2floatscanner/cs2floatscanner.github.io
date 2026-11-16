@@ -114,7 +114,8 @@
     "compactRadar": "Market Radar",
     "compactRadarText": "Track exact Steam Market variants with entry targets and prices in USD or UAH. Compare the lowest ask, sales over 7 and 30 days, and changes in active Steam listings. Refresh on demand from an open Market tab.",
     "compactCollection": "CSV exports and trade reminders",
-    "compactCollectionText": "Export inventory, Storage Units or selected items to Excel-compatible CSV. Choose individual items or grouped market variants and see how much of the account was read. See known trade-lock or trade-protection deadlines and set reminders from the Storage workspace."
+    "compactCollectionText": "Export inventory, Storage Units or selected items to Excel-compatible CSV. Choose individual items or grouped market variants and see how much of the account was read. See known trade-lock or trade-protection deadlines and set reminders from the Storage workspace.",
+    "homeTitle": "CS2 Float Scanner 1.11.0 — Market Radar and Collection Tools"
   },
   "ru": {
     "skip": "К содержимому",
@@ -231,6 +232,7 @@
     "compactRadar": "Радар рынка",
     "compactRadarText": "Следите за точными вариантами на рынке Steam. Задавайте цену входа в USD или UAH, сравнивайте минимум, продажи за 7 и 30 дней и изменение числа активных предложений. Данные обновляются по кнопке через открытую вкладку рынка.",
     "compactCollection": "Экспорт CSV и напоминания",
-    "compactCollectionText": "Выгружайте инвентарь, хранилища или выделение в CSV для Excel, по экземплярам или по рыночным вариантам. При неполном чтении видно покрытие аккаунта. Сроки блокировки и защиты после обмена показаны там, где Steam передал дату. Напоминания можно включить в окне хранилищ."
+    "compactCollectionText": "Выгружайте инвентарь, хранилища или выделение в CSV для Excel, по экземплярам или по рыночным вариантам. При неполном чтении видно покрытие аккаунта. Сроки блокировки и защиты после обмена показаны там, где Steam передал дату. Напоминания можно включить в окне хранилищ.",
+    "homeTitle": "CS2 Float Scanner 1.11.0 — радар рынка и инструменты коллекции"
   }
 }
